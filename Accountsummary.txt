@@ -1,0 +1,18 @@
+Feature: Account summary for Voyager flow
+
+Background: Make sure Authorization API called
+ Given fetch PartnerRefId from TDAS using API call
+ When user hits the 'Voyager2legAuth' API with requestType 'POST' with valid client id 
+ Then the 'Voyager2legAuth' response should be displayed with status code as '200'
+ 
+ @VoyagerPositive
+  Scenario Outline: [Voyager-001]_Verify Voyager Account Summary is Successful
+  
+    Given Read TestCaseId & SheetName from the scenario "<TestcaseID>" and "<SheetName>"
+    When Sending Account summary Request to CITIAPI with PartnerRefId
+    When Receiving a Response from CITIAPI
+    Then Verify the  Account summary Response status code is "200"
+    And Validate that Account summary Response is a valid "JSON" Schema
+    And Verify the Account summary Response has mandatory fields and are Not Null
+    And Validate that no additional fields in Account summary when compared with "<InitiateFieldColum>"
+    	
